@@ -6,26 +6,43 @@ import os
 import csv
 csvpath=os.path.join('Resources','election_data.csv')
 
-# Control Flow (With) Statement
+# Define Variables
+votes = []
+county = []
+candidates = []
+khan = []
+correy = []
+li = []
+otooley = []
+
+# With Statement to Count Votes in CSV File
 with open(csvpath, newline='') as csvfile:
-    csvreader = csv.reader(csvfile, delimiter=',')
-    csv_header = next(csvreader)
-    votes = []
-    county = []
-    candidates = []
-    khan = []
-    correy = []
-    li = []
-    otooley = []
+    csv_reader = csv.reader(csvfile, delimiter=',')
+    csv_header = next(csv_reader)
 
-
-    for row in csvreader:
+    for row in csv_reader:
         votes.append(int(row[0]))
         county.append(row[1])
         candidates.append(row[2])
 
-    # Total Vote Count
-    total_votes = (len(votes))
+
+# ---------------------------
+# Attempted to get unique candiate name from csv list instead of hard coding
+# ---------------------------
+# Python program to check if two  
+# to get unique values from list 
+# using numpy.unique  
+# import numpy as np 
+  
+# # function to get unique values 
+# def unique(list1): 
+#     x = np.array(list1) 
+#     print(np.unique(x)) 
+      
+# # driver code 
+# list1 = [candidates] 
+# unique(list1) 
+
 
     # Vote Counts per Person
     for candidate in candidates:
@@ -41,28 +58,27 @@ with open(csvpath, newline='') as csvfile:
         else:
             otooley.append(candidates)
             otooley_votes = len(otooley)
+
+# Total Vote Count
+total_votes = (len(votes))
     
-    
-    # Percentages to 3 Decimal Places
-    from decimal import Decimal
+# Percentages to 3 Decimal Places
+from decimal import Decimal
 
-    khan_percent = round(Decimal((khan_votes / total_votes) * 100), 3)
-    correy_percent = round(Decimal((correy_votes / total_votes) * 100), 3)
-    li_percent = round(Decimal((li_votes / total_votes) * 100), 3)
-    otooley_percent = round(Decimal((otooley_votes / total_votes) * 100), 3)
+khan_percent = round(Decimal((khan_votes / total_votes) * 100), 3)
+correy_percent = round(Decimal((correy_votes / total_votes) * 100), 3)
+li_percent = round(Decimal((li_votes / total_votes) * 100), 3)
+otooley_percent = round(Decimal((otooley_votes / total_votes) * 100), 3)
 
-    
-    # Winner With the Highest Vote Percentage
-    if khan_percent > max(correy_percent, li_percent, otooley_percent):
-        winner = 'Khan'
-    elif correy_percent > max(khan_percent, li_percent, otooley_percent):
-        winner = 'Correy'  
-    elif li_percent > max(correy_percent, khan_percent, otooley_percent):
-        winner = 'Li'
-    else:
-        winner = "O'Tooley"
-
-
+# Winner With the Highest Vote Percentage
+if khan_percent > max(correy_percent, li_percent, otooley_percent):
+    winner = 'Khan'
+elif correy_percent > max(khan_percent, li_percent, otooley_percent):
+    winner = 'Correy'  
+elif li_percent > max(correy_percent, khan_percent, otooley_percent):
+    winner = 'Li'
+else:
+    winner = "O'Tooley"
 
 # Analysis Output
 output = (
@@ -76,15 +92,17 @@ output = (
     f"O'Tooley: {otooley_percent}% ({otooley_votes})\n"
     f'-------------------------\n'
     f'Winner: {winner}\n'
-    f'-------------------------'
-
-)
+    f'-------------------------')
 
 # Print Output Statements
 print(output)
 
 # Export .txt file
-# output_path = os.path.join('Analysis', "analysis.txt")
+output_path = os.path.join('Analysis', "analysis.txt")
 
-# with open(output_path, "w") as txt_file:
-#     txt_file.write(output)
+with open(output_path, "w") as txt_file:
+    txt_file.write(output)
+
+
+
+  
